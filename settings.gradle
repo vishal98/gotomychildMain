@@ -1,0 +1,3 @@
+include ':app', ':ViewpagerIndicator', ':gotomychilddev'
+include ':infiniteviewpagerLibrary'
+include ':myCalendar'
