@@ -155,7 +155,12 @@ public class CalendarActivity extends BaseFragmentActivity implements RequestCom
         getChildCalenderEvent( cal.get(Calendar.DAY_OF_MONTH)+ "-" + (cal.get(Calendar.MONTH) + 1) + "-" +   cal.get(Calendar.YEAR),Constants.SET_SWITCH_CHILD_ID);
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        selectedChildPosition = appController.getSelectedChild();
+        switchChild.childNameTV.setText(Constants.SWITCH_CHILD_FLAG);
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

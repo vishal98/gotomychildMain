@@ -201,7 +201,7 @@ public class LoginActivity extends BaseActivity implements RequestCompletion, Vi
             public void onClick(DialogInterface dialog, int which) {
                 CommonUtils.getLogs("Possitive Clicked");
 
-              //  Pushbots.sharedInstance().init(LoginActivity.this);
+             Pushbots.sharedInstance().init(LoginActivity.this);
                 String regId = Pushbots.sharedInstance().regID();
                 CommonUtils.getLogs("Reg ID: " + regId);
                 type = RequestType.REGISTER;

@@ -3,7 +3,9 @@ package com.mychild.view.Parent;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -65,6 +67,9 @@ public class ParentWriteMailToTeacher extends BaseFragmentActivity implements Re
     AutoCompleteTextView textView;
     HashMap<String,String> maildMap=new HashMap<String,String>();
     Boolean NoreplyMail=true;
+    public String pm;
+public Bundle extras;
+    TextView sentBox;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,7 +117,7 @@ String mailToId;
     public void UpdateUI(){
         Intent intent = getIntent();
         if(intent.hasExtra("mailto")) {
-            Bundle extras = intent.getExtras();
+           extras = intent.getExtras();
             if (extras != null) {
                 NoreplyMail=false;
                 textView.setText(extras.getString("mailto"));
@@ -245,6 +250,10 @@ String mailToId;
             status = getEmailSentStatus(responseJson);
             if(status.contains("success")){
                 CommonUtils.getToastMessage(this, "Email Sent.");
+                finish();
+                Intent i=new Intent(this,ParentInboxActivity.class);
+                startActivity(i);
+
             }
             else {
                 CommonUtils.getToastMessage(this, "Email Not Sent.");
@@ -327,6 +336,8 @@ String mailToId;
             Log.i("----->123",mailTo);
             String mailToStringdata = to.getText().toString();
             Log.i("----->1234",mailToStringdata);
+         pm=  extras.getString("msg");
+
 
             String mailSubject = subject.getText().toString();
             String mailMessage = message.getText().toString();
@@ -347,7 +358,8 @@ String mailToId;
                     jsonObject.put("toId", mailId);
                     jsonObject.put("fromId", mailFrom);
                     jsonObject.put("title", mailSubject);
-                    jsonObject.put("messageText", mailMessage);
+                    //jsonObject.put("messageText", mailMessage);
+                 jsonObject.put("messageText", mailMessage +"\n"+"\n"+"Reply of... "+"\n" +pm);
 
                 } catch (JSONException e) {
                     e.printStackTrace();

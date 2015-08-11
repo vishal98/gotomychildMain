@@ -24,6 +24,7 @@ import com.mychild.interfaces.IOnSwichChildListener;
 import com.mychild.model.ExamModel;
 import com.mychild.model.ParentModel;
 import com.mychild.model.ResultsModel;
+import com.mychild.sharedPreference.StorageManager;
 import com.mychild.utils.CommonUtils;
 import com.mychild.utils.Constants;
 import com.mychild.utils.TopBar1;
@@ -299,7 +300,7 @@ public class ExamsActivity extends BaseActivity implements View.OnClickListener,
     public void switchChildBar() {
         switchChild = (SwitchChildView) findViewById(R.id.switchchildBar);
         switchChild.initSwitchChildBar();
-//        switchChild.childNameTV.setText(StorageManager.readString(this, getString(R.string.pref_username), ""));
+        switchChild.childNameTV.setText(StorageManager.readString(this, getString(R.string.pref_username), ""));
 
     }
 
