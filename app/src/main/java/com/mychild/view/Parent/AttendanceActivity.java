@@ -279,6 +279,7 @@ public class AttendanceActivity extends BaseFragmentActivity implements RequestC
     public void switchChildBar() {
         switchChild = (SwitchChildView) findViewById(R.id.switchchildBar);
         switchChild.initSwitchChildBar();
+
         switchChild.childNameTV.setText("Name");
         switchChild.switchChildBT.setOnClickListener(this);
     }

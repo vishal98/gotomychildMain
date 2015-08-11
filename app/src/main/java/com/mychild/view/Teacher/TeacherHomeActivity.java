@@ -129,9 +129,9 @@ public class TeacherHomeActivity extends BaseActivity implements View.OnClickLis
             case R.id.logoutIV:
                 SharedPreferences clearSharedPreferenceForLogout;
                 clearSharedPreferenceForLogout = getSharedPreferences("MyChild_Preferences", 0);
-                String regId = Pushbots.sharedInstance().regID();
-                WebServiceCall webServiceCall = new WebServiceCall(TeacherHomeActivity.this);
-                webServiceCall.unRegisterDevice(regId);
+//                String regId = Pushbots.sharedInstance().regID();
+//                WebServiceCall webServiceCall = new WebServiceCall(TeacherHomeActivity.this);
+//                webServiceCall.unRegisterDevice(regId);
                 SharedPreferences.Editor editor = clearSharedPreferenceForLogout.edit();
                 editor.clear();
                 editor.commit();

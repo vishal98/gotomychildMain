@@ -170,9 +170,9 @@ public class ParentHomeActivity extends BaseActivity implements RequestCompletio
                 Toast.makeText(this, "Clicked Logout", Toast.LENGTH_LONG).show();
                 clearSharedPreferenceForLogout = getSharedPreferences("Response", 0);
                 clearSharedPreferenceForLogout = getSharedPreferences("MyChild_Preferences", 0);
-                String regId = Pushbots.sharedInstance().regID();
-                WebServiceCall webServiceCall = new WebServiceCall(ParentHomeActivity.this);
-                webServiceCall.unRegisterDevice(regId);
+//                String regId = Pushbots.sharedInstance().regID();
+//                WebServiceCall webServiceCall = new WebServiceCall(this);
+//                webServiceCall.unRegisterDevice(regId);
                 SharedPreferences.Editor editor = clearSharedPreferenceForLogout.edit();
                 editor.clear();
                 editor.commit();

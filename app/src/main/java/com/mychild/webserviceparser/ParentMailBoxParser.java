@@ -54,6 +54,21 @@ public class ParentMailBoxParser {
                                 String fromId = conversationObj.getString("fromName");
                                 chatMap.put("fromName", fromId);
                             }
+                            if (conversationObj.has("toId")) {
+                                String toId = conversationObj.getString("toId");
+                                chatMap.put("toId", toId);
+                            }
+                            if (conversationObj.has("toName")) {
+                                String toName = conversationObj.getString("toName");
+                                chatMap.put("toName", toName);
+                            }
+                            if (conversationObj.has("threadId")) {
+                                Long threadId = conversationObj.getLong("threadId");
+
+                                String tid=String.valueOf(threadId);
+                                chatMap.put("threadId", tid);
+                            }
+
                             if (conversationObj.has("title")) {
                                 String title = conversationObj.getString("title");
                                 chatMap.put("title", title);
@@ -70,6 +85,10 @@ public class ParentMailBoxParser {
                                     if (messageObj.has("messageText")) {
                                         String messageText = messageObj.getString("messageText");
                                         chatMap.put("messageText", messageText);
+                                    }
+                                    if (messageObj.has("messageId")) {
+                                        String messageId = messageObj.getString("messageId");
+                                        chatMap.put("messageId", messageId);
                                     }
                                 }
                             }

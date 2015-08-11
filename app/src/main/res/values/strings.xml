@@ -16,8 +16,10 @@
     <string name="forgetpwdstring">Enter your Email Address here to receive a link to change password.</string>
     <string name="sendmail">SEND EMAIL</string>
     <string name="changepwd">Change Password</string>
+    <string name="help">HELP</string>
+    <string name="path">Attachment</string>
     <string name="pushbotsUrl">https://api.pushbots.com/deviceToken/del</string>
-
+    <string name="mail_sent">/app/conversations/sent</string>
 
     <!--activity_child_homeworkvity_child_homework.xml used text-->
     <string name="to_hint">To</string>
@@ -40,7 +42,7 @@
     <string name="inbox">Inbox</string>
     <string name="chat">Chat</string>
     <string name="calender">Calender</string>
-    <string name="attendence">Attendence</string>
+    <string name="attendence">Attendance</string>
     <string name="transport">Transport</string>
     <string name="Mail">Transport</string>
     <string name="child_exams_activity">ExamsActivity</string>
@@ -49,7 +51,7 @@
     <string name="profileimagechange_url">/app/updateProfilePic</string>
     <!--Endpoint urls -->
 
-    <string name="base_url">http://gotomychild.elasticbeanstalk.com</string>
+         <string name="base_url">http://gotomychild.elasticbeanstalk.com</string>
     <string name="login_url_endpoint">/api/login</string>
     <string name="url_exams">MyChild/Parent/username/</string>
     <string name="parent_url_endpoint">/Parent/username/</string>
@@ -65,6 +67,8 @@
     <string name="calender_task_teacher">/app/events/teacher/</string>
     <string name="gallery_url">/app/getuserAlbums</string>
     <string name="changepwd_url">/app/changePassword</string>
+    <string name="map_getbusgeocode_url">/app/locationDetails</string>
+
 
     <!--teacher flow-->
     <string name="url_teacher_deatils">/Teacher/id</string>
@@ -147,6 +151,7 @@
     <string name="title_activity_teacher_write_new_email">TeacherWriteNewEmailActivity</string>
     <string name="title_activity_attendence">AttendenceActivity</string>
 
+    <string name="err" color="#9a1d1d">Reply Of</string>
 
     <!--attendence-->
     <string name="attendence_title">Attendance</string>
@@ -200,6 +205,12 @@
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
     <string name="title_activity_top_bar1">TopBar1</string>
+    <string name="title_activity_parent_sent">ParentSentActivity</string>
+    <string name="title_activity_sent_adapter">SentAdapter</string>
+    <string name="title_activity_sent_detail">SentDetailActivity</string>
+    <string name="title_activity_parent_write_mail_to_teacher2">ParentWriteMailToTeacher2</string>
+    <string name="title_activity_help">HelpActivity</string>
+    <string name="title_activity_mail">Mail</string>
 
 
 </resources>

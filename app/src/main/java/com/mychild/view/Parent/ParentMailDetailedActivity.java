@@ -65,6 +65,7 @@ public class ParentMailDetailedActivity extends BaseFragmentActivity implements 
                 break;
 
             case R.id.reply_imgview:
+
                 Intent intent = new Intent(ParentMailDetailedActivity.this, com.mychild.view.Parent.ParentWriteMailToTeacher.class);
                 Bundle b = new Bundle();
                 b.putString("mailto", regardsFromTV.getText().toString());

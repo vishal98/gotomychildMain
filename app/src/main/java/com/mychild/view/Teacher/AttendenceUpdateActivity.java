@@ -1,5 +1,7 @@
 package com.mychild.view.Teacher;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,8 +25,10 @@ import com.mychild.model.TeacherModel;
 import com.mychild.sharedPreference.StorageManager;
 import com.mychild.utils.CommonUtils;
 import com.mychild.utils.Constants;
+
 import com.mychild.utils.TopBar1;
 import com.mychild.view.CommonToApp.BaseActivity;
+import com.mychild.view.CommonToApp.LoginActivity;
 import com.mychild.view.R;
 import com.mychild.webserviceparser.AttendaceJsonParser;
 import com.thehayro.view.InfinitePagerAdapter;
@@ -70,7 +74,7 @@ public class AttendenceUpdateActivity extends BaseActivity implements View.OnCli
         topBar = (TopBar1) findViewById(R.id.topBar);
         topBar.initTopBar();
         topBar.backArrowIV.setOnClickListener(this);
-    //    topBar.logoutIV.setOnClickListener(this);
+      //  topBar.logoutIV.setOnClickListener(this);
         topBar.titleTV.setText(getString(R.string.attendence_title));
         studentsListview = (ListView) findViewById(R.id.students_listview);
         doneTV = (TextView) findViewById(R.id.done_tv);
@@ -174,11 +178,11 @@ public class AttendenceUpdateActivity extends BaseActivity implements View.OnCli
 //                startActivity(new Intent(this, LoginActivity.class));
 
             case R.id.edit:
-                    editTV.setVisibility(View.GONE);
-                    doneTV.setVisibility(View.VISIBLE);
-                    studentsListabsent = teacherModel.getGradeModels().get(0).getAbsentStudentsModels();
-                    adapter = new StudentsListAdapter(this, R.layout.select_student_list_item, studentsList, studentsListabsent, true, true);
-                    studentsListview.setAdapter(adapter);
+                editTV.setVisibility(View.GONE);
+                doneTV.setVisibility(View.VISIBLE);
+                studentsListabsent = teacherModel.getGradeModels().get(0).getAbsentStudentsModels();
+                adapter = new StudentsListAdapter(this, R.layout.select_student_list_item, studentsList, studentsListabsent, true, true);
+                studentsListview.setAdapter(adapter);
                 break;
             default:
         }
@@ -245,46 +249,46 @@ public class AttendenceUpdateActivity extends BaseActivity implements View.OnCli
         if (responseArray != null) {
             switch (type) {
                 case TYPE_GET:
-                    boolean hasClassList=false;
+                    boolean hasClassList = false;
                     try {
                         JSONObject jsonObject = responseArray.getJSONObject(0);
                         if (jsonObject.has("message")) {
-                            hasClassList= jsonObject.getString("message").equals("No Class assigned as Class Teacher");
+                            hasClassList = jsonObject.getString("message").equals("No Class assigned as Class Teacher");
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    if(!hasClassList) {
-                    teacherModel = AttendaceJsonParser.getInstance().getTeacherModel(responseArray);
-                    studentsList = teacherModel.getGradeModels().get(0).getStudentsModels();
-                    studentsSize = studentsList.size();
-                    if (AttendenceUpdateActivity.hasattendancedone) {
-                        studentsListabsent = teacherModel.getGradeModels().get(0).getAbsentStudentsModels();
-                        adapter = new StudentsListAdapter(this, R.layout.select_student_list_item, studentsList, studentsListabsent, true, false);
-                        studentsListview.setAdapter(adapter);
-                        editTV.setVisibility(View.VISIBLE);
-                        doneTV.setVisibility(View.GONE);
-                    } else {
-                        adapter = new StudentsListAdapter(this, R.layout.select_student_list_item, studentsList);
-                        studentsListview.setAdapter(adapter);
-                        editTV.setVisibility(View.GONE);
-                        doneTV.setVisibility(View.VISIBLE);
-                    }
-                    Constants.stopProgress(this);
-                    try {
-                        obj = (JSONObject) responseArray.get(0);
 
-                        if (obj.has("message")) {
-                            CommonUtils.getToastMessage(this, obj.getString("message"));
+                    if (!hasClassList) {
+                        teacherModel = AttendaceJsonParser.getInstance().getTeacherModel(responseArray);
+                        studentsList = teacherModel.getGradeModels().get(0).getStudentsModels();
+                        studentsSize = studentsList.size();
+                        if (AttendenceUpdateActivity.hasattendancedone) {
+                            studentsListabsent = teacherModel.getGradeModels().get(0).getAbsentStudentsModels();
+                            adapter = new StudentsListAdapter(this, R.layout.select_student_list_item, studentsList, studentsListabsent, true, false);
+                            studentsListview.setAdapter(adapter);
+                            editTV.setVisibility(View.VISIBLE);
+                            doneTV.setVisibility(View.GONE);
+                        } else {
+                            adapter = new StudentsListAdapter(this, R.layout.select_student_list_item, studentsList);
+                            studentsListview.setAdapter(adapter);
+                            editTV.setVisibility(View.GONE);
+                            doneTV.setVisibility(View.VISIBLE);
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }}
-                    else
-                    {
+                        Constants.stopProgress(this);
+                        try {
+                            obj = (JSONObject) responseArray.get(0);
+
+                            if (obj.has("message")) {
+                                CommonUtils.getToastMessage(this, obj.getString("message"));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
                         Constants.stopProgress(this);
                         onBackPressed();
-                       Toast.makeText(this,"No Class assigned as Class Teacher",Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "No Class assigned as Class Teacher", Toast.LENGTH_LONG).show();
                     }
                     break;
                 case GET_POST:
@@ -308,7 +312,6 @@ public class AttendenceUpdateActivity extends BaseActivity implements View.OnCli
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
         }
     }
 
@@ -325,7 +328,6 @@ public class AttendenceUpdateActivity extends BaseActivity implements View.OnCli
         public void onClick(View v) {
             TextView tv = (TextView) v;
             String selectedDate = tv.getTag().toString();
-
             ((TextView) findViewById(R.id.text1)).setTextColor(Color.parseColor("#D7D7D7"));
             ((TextView) findViewById(R.id.text2)).setTextColor(Color.parseColor("#D7D7D7"));
             ((TextView) findViewById(R.id.text3)).setTextColor(Color.parseColor("#D7D7D7"));
@@ -544,4 +546,7 @@ public class AttendenceUpdateActivity extends BaseActivity implements View.OnCli
                 return "";
         }
     }
+
+
+
 }

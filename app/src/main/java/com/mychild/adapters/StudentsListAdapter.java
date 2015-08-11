@@ -60,23 +60,45 @@ public class StudentsListAdapter extends ArrayAdapter<StudentDTO> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = null;
+        //  ViewHolder holder = null;
+        CheckBox checkBox;
+        TextView studentNameTV,studentIdTV;
+        StudentDTO planet =this.getItem(position);
+
         if (convertView == null) {
             convertView = inflater.inflate(resource, null);
-            holder = new ViewHolder();
-            holder.studentIdTV = (TextView) convertView.findViewById(R.id.student_id_tv);
-            holder.studentNameTV = (TextView) convertView.findViewById(R.id.student_name_tv);
-            holder.checkBox = (CheckBox) convertView.findViewById(R.id.checkbox);
-            convertView.setTag(holder);
+            //  holder = new ViewHolder();
+            studentIdTV = (TextView) convertView.findViewById(R.id.student_id_tv);
+            studentNameTV = (TextView) convertView.findViewById(R.id.student_name_tv);
+            checkBox = (CheckBox) convertView.findViewById(R.id.checkbox);
+            //  convertView.setTag(holder);
+            convertView.setTag(new ViewHolder(studentIdTV,studentNameTV, checkBox));
+            checkBox.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    CheckBox cb = (CheckBox) v;
+                    StudentDTO planet = (StudentDTO) cb.getTag();
+                    planet.setChecked(cb.isChecked());
+                }
+            });
         } else {
-            holder = (ViewHolder) convertView.getTag();
+            //  holder = (ViewHolder) convertView.getTag();
+            ViewHolder viewHolder = (ViewHolder) convertView
+                    .getTag();
+            checkBox = viewHolder.getCheckBox();
+            studentIdTV = viewHolder.getStudentIdTV();
+            studentNameTV = viewHolder.getStudentNameTV();
         }
+        checkBox.setTag(planet);
+        checkBox.setChecked(planet.isChecked());
+        studentIdTV.setText(String.valueOf(planet.getStudentId()));
+        studentNameTV.setText(planet.getStundentName());
+
         StudentDTO studentDTO = getItem(position);
         if (mSelectedItemsIds.get(studentDTO.getStudentId())) {
-            holder.checkBox.setChecked(true);
+            checkBox.setChecked(true);
         }
-        holder.checkBox.setTag(getItem(position));
-        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        //  holder.checkBox.setTag(getItem(position));
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 // int pos = Integer.parseInt((buttonView).getTag().toString());
@@ -88,27 +110,64 @@ public class StudentsListAdapter extends ArrayAdapter<StudentDTO> {
                 iOnCheckedChangeListener.checkedStateChanged(dto, isChecked);
             }
         });
+
         StudentDTO dto = getItem(position);
-        holder.studentIdTV.setText("#" + dto.getStudentId() + "");
-        holder.studentNameTV.setText(dto.getStundentName());
-        if(hasAbsentList) {
-            holder.checkBox.setChecked(true);
-            convertView.setEnabled(isEditEnabled);
-            holder.checkBox.setEnabled(isEditEnabled);
-            for(StudentDTO studentDTO1:absentList){
-                int name=studentDTO1.getStudentId();
-                if(name == dto.getStudentId()){
-                    holder.checkBox.setChecked(false);
-                    break;
+        studentIdTV.setText("#" + dto.getStudentId() + "");
+        studentNameTV.setText(dto.getStundentName());
+        if(hasAbsentList)
+            if(!isEditEnabled){
+                checkBox.setChecked(true);
+                convertView.setEnabled(isEditEnabled);
+                checkBox.setEnabled(isEditEnabled);
+                for(StudentDTO studentDTO1:absentList){
+                    int name=studentDTO1.getStudentId();
+                    if(name == dto.getStudentId()){
+                        checkBox.setChecked(false);
+                        break;
+                    }
                 }
             }
-        }
+            else
+            {
+                convertView.setEnabled(isEditEnabled);
+                checkBox.setEnabled(isEditEnabled);
+            }
         return convertView;
     }
 
     public static class ViewHolder {
         TextView studentIdTV, studentNameTV;
         CheckBox checkBox;
+
+        public ViewHolder(TextView studentIdTV, TextView studentNameTV, CheckBox checkBox) {
+            this.studentIdTV = studentIdTV;
+            this.studentNameTV = studentNameTV;
+            this.checkBox = checkBox;
+        }
+
+        public TextView getStudentIdTV() {
+            return studentIdTV;
+        }
+
+        public void setStudentIdTV(TextView studentIdTV) {
+            this.studentIdTV = studentIdTV;
+        }
+
+        public TextView getStudentNameTV() {
+            return studentNameTV;
+        }
+
+        public void setStudentNameTV(TextView studentNameTV) {
+            this.studentNameTV = studentNameTV;
+        }
+
+        public CheckBox getCheckBox() {
+            return checkBox;
+        }
+
+        public void setCheckBox(CheckBox checkBox) {
+            this.checkBox = checkBox;
+        }
     }
 
     @Override

@@ -27,6 +27,16 @@
             android:text="@string/all_mails"
             android:textStyle="bold"
             android:layout_marginTop="10dp" />
+        <TextView
+            android:id="@+id/mailSent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="SentBox"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="120dp"
+            />
 
         <RelativeLayout
             android:id="@+id/mailinfobarRV"

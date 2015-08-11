@@ -3,8 +3,10 @@ package com.mychild.view.Parent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -13,9 +15,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.mychild.Networkcall.RequestCompletion;
+import com.mychild.Networkcall.WebServiceCall;
+import com.mychild.utils.CommonUtils;
+import com.mychild.utils.Constants;
 import com.mychild.utils.DirectionsJSONParser;
 import com.mychild.view.R;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -27,36 +34,81 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by Antony on 11-06-2015.
  */
-public class ParentTransportMapRouteActivity extends FragmentActivity {
+public class ParentTransportMapRouteActivity extends FragmentActivity implements RequestCompletion {
     private GoogleMap mMap;
-    public static double mSourceLatitude = 13.012731, mSourceLongitude = 77.578157;
+    public static double mSourceLatitude = 12.976496, mSourceLongitude = 77.700215;
     public static double mDestinationLatitude = 13.013333, mDestinationLongitude = 77.76556;
-    private LatLng currentgeo = new LatLng(13.013333, 77.76556);
-
-
-
+    //   private LatLng currentgeo = new LatLng(13.013333, 77.76556);
+    private LatLng currentgeo = new LatLng(12.976496, 77.700215);
+    Timer timer = new Timer();
+    //   12.976496, 77.700215
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transport_maproute);
         setUpMapIfNeeded();
-        getDirection();
-
-
+        //  getDirection();
+        // getGeoCodeWebservicescall();
+        callAsynchronousTask();
     }
+
+
+    public void callAsynchronousTask() {
+        final Handler handler = new Handler();
+        //  Timer timer = new Timer();
+        TimerTask doAsynchronousTask = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    public void run() {
+                        try {
+                            getGeoCodeWebservicescall();
+                        } catch (Exception e) {
+                            // TODO Auto-generated catch block
+                        }
+                    }
+                });
+            }
+        };
+        timer.schedule(doAsynchronousTask, 0, 180000 / 3); //execute in every 50000 ms
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        try {
+            timer.cancel();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    private void getGeoCodeWebservicescall() {
+        if (CommonUtils.isNetworkAvailable(this)) {
+            //    Constants.showProgress(this);
+            String Url_notice = (getString(R.string.base_url) + getString(R.string.map_getbusgeocode_url));
+            WebServiceCall call = new WebServiceCall(this);
+            Log.e("111111111111111>>", Url_notice);
+            call.getCallRequest(Url_notice);
+        } else {
+            CommonUtils.getToastMessage(this, getString(R.string.no_network_connection));
+        }
+    }
+
 
     private void setUpMapIfNeeded() {
         // TODO Auto-generated method stub
         if (mMap == null)
             mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(
-                R.id.map)).getMap();
+                    R.id.map)).getMap();
 
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap.getUiSettings().setZoomControlsEnabled(true);
@@ -64,7 +116,6 @@ public class ParentTransportMapRouteActivity extends FragmentActivity {
 
     public void getDirection() {
         DownloadTask downloadTask = new DownloadTask();
-
         downloadTask
                 .execute("https://maps.googleapis.com/maps/api/directions/json?origin=13.012731,77.578157&destination=13.013333,77.76556"/*"https://maps.googleapis.com/maps/api/directions/json?origin="
                         + mSourceLatitude
@@ -74,6 +125,80 @@ public class ParentTransportMapRouteActivity extends FragmentActivity {
                         + mDestinationLatitude
                         + ","
                         + mDestinationLongitude*/);
+    }
+
+/*
+    [
+    {
+        "status": "success",
+            "message": "route present",
+            "location":
+        {
+            "driverName": "ram",
+                "driverPhonenumber": "2324424",
+                "intialLatitude": "",
+                "intialLongitute": "",
+                "lastUpdated": "2015-08-07T17:31:18Z",
+                "latitude": "2015-08-07T17:31:18Z",
+                "currentLongitute": "12.9789659"
+        }
+    }
+    ]*/
+
+
+    @Override
+    public void onRequestCompletion(JSONObject responseJson, JSONArray responseArray) {
+        //    Constants.stopProgress(this);
+        Log.e("--map response--->>>", responseArray.toString());
+        try {
+            if (responseArray != null) {
+                JSONObject jsonObject = responseArray.getJSONObject(0);
+                if (jsonObject.has("location")) {
+                    JSONObject jsonObject1 = jsonObject.getJSONObject("location");
+                    Log.e("jsonObject1--->>", jsonObject1.get("driverName").toString() +
+                            "----" + jsonObject1.get("driverPhonenumber").toString() +
+                            "----" + jsonObject1.get("currentLongitute").toString());
+                    String mDriverName = jsonObject1.get("driverName").toString();
+                    String mDriverPhoneNo = " " + jsonObject1.get("driverPhonenumber").toString();
+                    String mCurrentLong ="12.976499",mCurrentLatitude="77.700219";
+
+                    if(jsonObject1.has("currentLongitute")){
+                        mCurrentLong = jsonObject1.get("currentLongitute").toString();
+                    }
+                    if(jsonObject1.has("currentlatitude")){
+                        mCurrentLatitude = jsonObject1.get("currentlatitude").toString();
+                    }
+                    showMarkerOfBusGeoCode(mCurrentLatitude,mCurrentLong);
+                }
+            } else {
+                Toast.makeText(this, "No data..", Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showMarkerOfBusGeoCode(String mCurrentLatitude, String mCurrentLong) {
+       /* public static double mSourceLatitude = 12.976496, mSourceLongitude = 77.700215;
+        public static double mDestinationLatitude = 13.013333, mDestinationLongitude = 77.76556;*/
+        try {
+            LatLng currentgeo = new LatLng(Double.parseDouble(mCurrentLong), Double.parseDouble(mCurrentLatitude));
+            LatLng point = new LatLng(Double.parseDouble(mCurrentLong), Double.parseDouble(mCurrentLatitude));
+            Log.e("-------------->>>>", Double.parseDouble(mCurrentLatitude) + "-----" + Double.parseDouble(mCurrentLong));
+            mMap.addMarker(new MarkerOptions().position(point).title("Bus Location"));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentgeo, 13f));
+            //  callAsynchronousTask();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onRequestCompletionError(String error) {
+        CommonUtils.getLogs("Error in response::" + error);
+        //   Constants.stopProgress(this);
+        Constants.showMessage(this, "unable to request. ", error);
     }
 
 
@@ -100,11 +225,9 @@ public class ParentTransportMapRouteActivity extends FragmentActivity {
             super.onPostExecute(result);
 
             ParserTask parserTask = new ParserTask();
-
             // Invokes the thread for parsing the JSON data
             parserTask.execute(result);
         }
-
 
         /**
          * A method to download json data from url
@@ -115,28 +238,20 @@ public class ParentTransportMapRouteActivity extends FragmentActivity {
             HttpURLConnection urlConnection = null;
             try {
                 URL url = new URL(strUrl);
-
                 // Creating an http connection to communicate with url
                 urlConnection = (HttpURLConnection) url.openConnection();
-
                 // Connecting to url
                 urlConnection.connect();
-
                 // Reading data from url
                 iStream = urlConnection.getInputStream();
-
                 BufferedReader br = new BufferedReader(new InputStreamReader(
                         iStream));
-
                 StringBuffer sb = new StringBuffer();
-
                 String line = "";
                 while ((line = br.readLine()) != null) {
                     sb.append(line);
                 }
-
                 data = sb.toString();
-
                 br.close();
 
             } catch (Exception e) {
@@ -234,7 +349,7 @@ public class ParentTransportMapRouteActivity extends FragmentActivity {
                 }
                 LatLng point = new LatLng(mSourceLatitude, mSourceLongitude);
                 mMap.addMarker(new MarkerOptions().position(point).title("Source"));
-                point =currentgeo;
+                point = currentgeo;
                 mMap.addMarker(new MarkerOptions().position(point).title(
                         "Destination"));
                 mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bc.build(), 50));

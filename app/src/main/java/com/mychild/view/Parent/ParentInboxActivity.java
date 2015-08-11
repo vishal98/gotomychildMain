@@ -47,7 +47,9 @@ public class ParentInboxActivity extends BaseActivity implements RequestCompleti
     private AppController appController = null;
     ListView listView;
     ArrayList<HashMap<String, String>> mailBox;
-    TextView mailCount,date1;
+    TextView mailCount,date1,sentBox;
+
+
 
 
     @Override
@@ -90,9 +92,15 @@ public class ParentInboxActivity extends BaseActivity implements RequestCompleti
             case R.id.back_arrow_iv:
                 onBackPressed();
                 break;
+            case R.id.mailSent:
+                startActivity(new Intent(ParentInboxActivity.this, ParentSentActivity
+                        .class));
+                break;
 
             case R.id.write_mailIV:
-                startActivity(new Intent(ParentInboxActivity.this, ParentWriteMailToTeacher.class));
+
+                startActivity(new Intent(ParentInboxActivity.this, ParentWriteMailToTeacher2.class));
+
                 break;
             case R.id.switch_child:
                 if (parentModel.getChildList() != null) {
@@ -185,9 +193,11 @@ public class ParentInboxActivity extends BaseActivity implements RequestCompleti
 
     public void setOnClickListener() {
         mailCount = (TextView) findViewById(R.id.mailCount);
+      sentBox = (TextView) findViewById(R.id.mailSent);
         writeMail = (ImageView) findViewById(R.id.write_mailIV);
         listView = (ListView) findViewById(R.id.parent_inbox_list);
         writeMail.setOnClickListener(this);
+        sentBox.setOnClickListener(this);
 
     }
 

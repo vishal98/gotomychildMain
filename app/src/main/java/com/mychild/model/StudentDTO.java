@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class StudentDTO implements Serializable {
 
     private String stundentName = "";
+    private String name = "";
     private int studentId = 0;
     private String dob;
     private String grade;
@@ -17,32 +18,75 @@ public class StudentDTO implements Serializable {
     private String registerNumber;
     private String localGuardian;
     private String section;
+    public boolean checked=false;
 
-    public AddressModel getAddressModel() {
+    public  StudentDTO()
+    {
+
+    }
+
+    public StudentDTO(String name)
+    {
+        this.name=name;
+    }
+    public StudentDTO(String name ,boolean checked)
+    {
+        this.name=name;
+        this.checked=checked;
+    }
+    public String getName()
+    {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+   public  boolean isChecked()
+   {
+       return checked;
+   }
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+    public  void toggleChecked()
+    {
+        checked=!checked;
+    }
+
+    public AddressModel getAddressModel()
+    {
+
         return addressModel;
     }
 
     public void setAddressModel(AddressModel addressModel) {
+
         this.addressModel = addressModel;
     }
 
-    public String getSection() {
+    public String getSection()
+    {
         return section;
     }
 
-    public void setSection(String section) {
+    public void setSection(String section)
+    {
         this.section = section;
     }
 
-    public String getLocalGuardian() {
+    public String getLocalGuardian()
+    {
         return localGuardian;
     }
 
-    public void setLocalGuardian(String localGuardian) {
+    public void setLocalGuardian(String localGuardian)
+    {
         this.localGuardian = localGuardian;
     }
 
-    public String getRegisterNumber() {
+    public String getRegisterNumber()
+    {
         return registerNumber;
     }
 
@@ -100,13 +144,16 @@ public class StudentDTO implements Serializable {
         this.stundentName = stundentName;
     }
 
-    public int getStudentId() {
+    public int getStudentId()
+    {
         return studentId;
     }
 
     public void setStudentId(int studentId) {
         this.studentId = studentId;
+
     }
+
 
 
 }
