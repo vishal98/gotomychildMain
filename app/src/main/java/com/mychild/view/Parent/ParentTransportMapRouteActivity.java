@@ -1,11 +1,14 @@
 package com.mychild.view.Parent;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -17,10 +20,16 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.mychild.Networkcall.RequestCompletion;
 import com.mychild.Networkcall.WebServiceCall;
+import com.mychild.customView.SwitchChildView;
+import com.mychild.interfaces.IOnSwichChildListener;
+import com.mychild.model.ParentModel;
 import com.mychild.utils.CommonUtils;
 import com.mychild.utils.Constants;
 import com.mychild.utils.DirectionsJSONParser;
+import com.mychild.utils.TopBar;
+import com.mychild.view.CommonToApp.LoginActivity;
 import com.mychild.view.R;
+import com.mychild.volley.AppController;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -40,24 +49,69 @@ import java.util.TimerTask;
 /**
  * Created by Antony on 11-06-2015.
  */
-public class ParentTransportMapRouteActivity extends FragmentActivity implements RequestCompletion {
+public class ParentTransportMapRouteActivity extends FragmentActivity implements RequestCompletion,IOnSwichChildListener, View.OnClickListener {
     private GoogleMap mMap;
     public static double mSourceLatitude = 12.976496, mSourceLongitude = 77.700215;
     public static double mDestinationLatitude = 13.013333, mDestinationLongitude = 77.76556;
     //   private LatLng currentgeo = new LatLng(13.013333, 77.76556);
     private LatLng currentgeo = new LatLng(12.976496, 77.700215);
     Timer timer = new Timer();
+    public static final String TAG = ChildrenTimeTableActivity.class.getSimpleName();
+    private TopBar topBar;
+    private SwitchChildView switchChild;
+    private int selectedChildPosition = 0;
+    private ParentModel parentModel = null;
+    private AppController appController = null;
+    private Dialog dialog = null;
+    String childName;
+    int getChildId = 0;
     //   12.976496, 77.700215
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setSwitchChildDialogueData();
         setContentView(R.layout.activity_transport_maproute);
+        setTopBar();
+        switchChildBar();
         setUpMapIfNeeded();
         //  getDirection();
         // getGeoCodeWebservicescall();
         callAsynchronousTask();
     }
 
+    public void setSwitchChildDialogueData() {
+        appController = (AppController) getApplicationContext();
+        parentModel = appController.getParentsData();
+        if (parentModel != null && parentModel.getNumberOfChildren() >= 0) {
+            selectedChildPosition = appController.getSelectedChild();
+        }
+    }
+
+    @Override
+    public void onSwitchChild(int selectedChildPosition) {
+
+        childName = Constants.getChildNameAfterSelecting(selectedChildPosition,appController.getParentsData());
+        getChildId = Constants.getChildIdAfterSelecting(selectedChildPosition, appController.getParentsData());
+        switchChild.childNameTV.setText(childName);
+        Constants.SWITCH_CHILD_FLAG = childName;
+        Log.i("Switching child::",Constants.SWITCH_CHILD_FLAG);
+        Constants.SET_SWITCH_CHILD_ID = getChildId;
+        this.selectedChildPosition = selectedChildPosition;
+        appController.setSelectedChild(selectedChildPosition);
+        dialog.dismiss();
+        callAsynchronousTask();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        try {
+            timer.cancel();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     public void callAsynchronousTask() {
         final Handler handler = new Handler();
@@ -82,6 +136,26 @@ public class ParentTransportMapRouteActivity extends FragmentActivity implements
     @Override
     protected void onPause() {
         super.onPause();
+       /* try {
+            timer.cancel();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }*/
+    }
+
+    public void setTopBar() {
+        topBar = (TopBar) findViewById(R.id.topBar);
+        topBar.initTopBar();
+        topBar.backArrowIV.setOnClickListener(this);
+        topBar.titleTV.setText(getString(R.string.transport));
+        topBar.logoutIV.setOnClickListener(this);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
         try {
             timer.cancel();
         }
@@ -89,10 +163,19 @@ public class ParentTransportMapRouteActivity extends FragmentActivity implements
             e.printStackTrace();
         }
     }
+
+    public void switchChildBar() {
+        switchChild = (SwitchChildView) findViewById(R.id.switchchildBar);
+        switchChild.initSwitchChildBar();
+        switchChild.childNameTV.setText("Name");
+        switchChild.switchChildBT.setOnClickListener(this);
+        switchChild.childNameTV.setOnClickListener(this);
+    }
+
     private void getGeoCodeWebservicescall() {
         if (CommonUtils.isNetworkAvailable(this)) {
             //    Constants.showProgress(this);
-            String Url_notice = (getString(R.string.base_url) + getString(R.string.map_getbusgeocode_url));
+            String Url_notice = (getString(R.string.base_url) + getString(R.string.map_getbusgeocode_url)+String.valueOf(Constants.SET_SWITCH_CHILD_ID));
             WebServiceCall call = new WebServiceCall(this);
             Log.e("111111111111111>>", Url_notice);
             call.getCallRequest(Url_notice);
@@ -147,6 +230,33 @@ public class ParentTransportMapRouteActivity extends FragmentActivity implements
 
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (appController != null) {
+            selectedChildPosition = appController.getSelectedChild();
+            if (appController.getParentsData() != null) {
+                onChangingChild();
+            } else {
+                switchChild.childNameTV.setText("No Child Selected");
+            }
+        }
+    }
+
+    public void onChangingChild(){
+        if(Constants.SWITCH_CHILD_FLAG == null){
+            childName = Constants.getChildNameAfterSelecting(0,appController.getParentsData());
+            switchChild.childNameTV.setText(childName);
+            Constants.SWITCH_CHILD_FLAG = childName;
+            Log.i("Setting Default child::",Constants.SWITCH_CHILD_FLAG);
+            getChildId = Constants.getChildIdAfterSelecting(0,appController.getParentsData());
+            Constants.SET_SWITCH_CHILD_ID = getChildId;
+        }
+        else {
+            switchChild.childNameTV.setText(Constants.SWITCH_CHILD_FLAG);
+        }
+    }
+
+    @Override
     public void onRequestCompletion(JSONObject responseJson, JSONArray responseArray) {
         //    Constants.stopProgress(this);
         Log.e("--map response--->>>", responseArray.toString());
@@ -199,6 +309,39 @@ public class ParentTransportMapRouteActivity extends FragmentActivity implements
         CommonUtils.getLogs("Error in response::" + error);
         //   Constants.stopProgress(this);
         Constants.showMessage(this, "unable to request. ", error);
+    }
+
+    @Override
+    public void onClick(View v) {
+
+
+        switch (v.getId()) {
+            case R.id.back_arrow_iv:
+                onBackPressed();
+                break;
+
+            case R.id.child_name:
+                startActivity(new Intent(this, ProfileFragmentActivity.class));
+                break;
+
+            case R.id.switch_child:
+                if (parentModel.getChildList() != null) {
+                    dialog = CommonUtils.getSwitchChildDialog(this, parentModel.getChildList(), selectedChildPosition);
+                } else {
+                    Toast.makeText(this, "No Child data found..", Toast.LENGTH_LONG).show();
+                }
+                break;
+            case R.id.logoutIV:
+                Toast.makeText(this, "Clicked Logout", Toast.LENGTH_LONG).show();
+                Constants.logOut(this);
+                Intent i = new Intent(this, LoginActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+                finish();
+                break;
+            default:
+                //Enter code in the event that that no cases match
+        }
     }
 
 
