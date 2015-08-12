@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/D:/gotomychildMain/ViewpagerIndicator/res/values/colors.xml -->
+    <!-- From: file:/E:/gotomychildMain/ViewpagerIndicator/res/values/colors.xml -->
     <eat-comment/>
     <color name="activate_text_color">#FF666666</color>
     <color name="background_tab_pressed">#6633B5E5</color>
