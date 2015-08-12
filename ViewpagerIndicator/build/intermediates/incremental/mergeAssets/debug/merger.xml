@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="C:\Users\gotomychild\ViewpagerIndicator\assets"><file name="font/Sansation_Regular.ttf" path="C:\Users\gotomychild\ViewpagerIndicator\assets\font\Sansation_Regular.ttf"/></source></dataSet><dataSet config="debug"><source path="C:\Users\gotomychild\ViewpagerIndicator\build-types\debug\assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="E:\gotomychildMain\ViewpagerIndicator\assets"><file name="font/Sansation_Regular.ttf" path="E:\gotomychildMain\ViewpagerIndicator\assets\font\Sansation_Regular.ttf"/></source></dataSet><dataSet config="debug"><source path="E:\gotomychildMain\ViewpagerIndicator\build-types\debug\assets"/></dataSet></merger>

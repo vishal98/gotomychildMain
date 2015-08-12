@@ -3,11 +3,15 @@ package com.mychild.view.Parent;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -17,10 +21,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import android .provider.MediaStore;
-import android.database.Cursor;
-import android.net.Uri;
 
 import com.mychild.Networkcall.RequestCompletion;
 import com.mychild.Networkcall.WebServiceCall;
@@ -43,12 +43,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-
-/**
- * Created by Vijay on 3/29/15.
- */
-public class ParentWriteMailToTeacher extends BaseFragmentActivity implements RequestCompletion, View.OnClickListener {
-    public static final String TAG = ParentWriteMailToTeacher.class.getSimpleName();
+public class ParentWriteMailToTeacher2Activity extends BaseFragmentActivity implements RequestCompletion, View.OnClickListener {
+    public static final String TAG = ParentWriteMailToTeacher2Activity .class.getSimpleName();
     private TopBar1 topBar;
     //private SwitchChildView switchChild;
     private ParentModel parentModel = null;
@@ -61,7 +57,6 @@ public class ParentWriteMailToTeacher extends BaseFragmentActivity implements Re
     private ImageView sendMail;
     String responseType;
     TextView date;
-
     EditText url_ed1;
     private ArrayAdapter<String> arrayAdapter;
     public static List<String> ll ;
@@ -69,16 +64,15 @@ public class ParentWriteMailToTeacher extends BaseFragmentActivity implements Re
     HashMap<String,String> maildMap=new HashMap<String,String>();
     Boolean NoreplyMail=true;
     public String pm;
-public Bundle extras;
-    TextView sentBox;
+    public Bundle extras;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setSwitchChildDialogueData();
-        setContentView(R.layout.activity_parent_writemail_to_teacher);
+        setContentView(R.layout.activity_parent_write_mail_to_teacher2);
         onClickListeners();
         setTopBar();
-      //  switchChildBar();
+        //  switchChildBar();
         UpdateUI();
         if(NoreplyMail) {
             getTeacherList();
@@ -114,11 +108,11 @@ public Bundle extras;
 
     }
 
-String mailToId;
+    String mailToId;
     public void UpdateUI(){
         Intent intent = getIntent();
         if(intent.hasExtra("mailto")) {
-           extras = intent.getExtras();
+            extras = intent.getExtras();
             if (extras != null) {
                 NoreplyMail=false;
                 textView.setText(extras.getString("mailto"));
@@ -133,7 +127,7 @@ String mailToId;
     @Override
     protected void onResume() {
         super.onResume();
-       // switchChild.childNameTV.setText(Constants.SWITCH_CHILD_FLAG);
+        // switchChild.childNameTV.setText(Constants.SWITCH_CHILD_FLAG);
     }
 
     @Override
@@ -151,14 +145,14 @@ String mailToId;
                 }
 
                 break;
-          //  case R.id.url_mail_btn:
+            //  case R.id.url_mail_btn:
 //                Constants.showProgress(this);
 //                postEailToServer();
             //    Intent intent=new Intent();
-              //  intent .setType("*/*");
-                //intent.setAction(Intent.ACTION_GET_CONTENT);
-                //startActivityForResult(Intent.createChooser(intent,"complete action using"),1);
-                //break;
+            //  intent .setType("*/*");
+            //intent.setAction(Intent.ACTION_GET_CONTENT);
+            //startActivityForResult(Intent.createChooser(intent,"complete action using"),1);
+            //break;
 
             case R.id.send_mail_btn:
                 Constants.showProgress(this);
@@ -187,10 +181,10 @@ String mailToId;
             //Bitmap photo = (Bitmap) data.getData().getPath();
 
             Uri selectedImageUri = data.getData();
-           String imagepath =getRealPathFromURI(selectedImageUri);
+            String imagepath =getRealPathFromURI(selectedImageUri);
             //bitmap=BitmapFactory.decodeFile(imagepath);
             //imageview.setImageBitmap(bitmap);
-          //  url_ed1.setText("Uploading file path:" +imagepath);
+            //  url_ed1.setText("Uploading file path:" +imagepath);
 
         }
     }
@@ -227,7 +221,7 @@ String mailToId;
     public void onRequestCompletion(JSONObject responseJson, JSONArray responseArray) {
         ll = new ArrayList<String>();
         String status = null;
-     //   String[] countries=null;
+        //   String[] countries=null;
         if(responseType == "JSONARRAY"){
             CommonUtils.getLogs("get teacher Response is success...");
             if(responseArray!=null && responseArray.length()>0) {
@@ -279,12 +273,12 @@ String mailToId;
         subject = (EditText) findViewById(R.id.mail_subjectET);
         message = (EditText) findViewById(R.id.mail_messageET);
         textView = (AutoCompleteTextView) findViewById(R.id.mail_toET);
-       // url_bt1=(ImageView)findViewById(R.id.url_mail_btn);
+        // url_bt1=(ImageView)findViewById(R.id.url_mail_btn);
         //url_ed1=(EditText)findViewById(R.id.mail_url);
         date=(TextView)findViewById(R.id.date);
         backButton.setOnClickListener(this);
         sendMail.setOnClickListener(this);
-     //   url_bt1.setOnClickListener(this);
+        //   url_bt1.setOnClickListener(this);
 
     }
 
@@ -293,11 +287,11 @@ String mailToId;
         topBar.initTopBar();
         topBar.backArrowIV.setVisibility(View.INVISIBLE);
         topBar.titleTV.setText(getString(R.string.inbox));
-      //  topBar.logoutIV.setOnClickListener(this);
+        //  topBar.logoutIV.setOnClickListener(this);
     }
 
     public void switchChildBar() {
-       // switchChild = (SwitchChildView) findViewById(R.id.switchchildBar);
+        // switchChild = (SwitchChildView) findViewById(R.id.switchchildBar);
         //switchChild.initSwitchChildBar();
         //switchChild.childNameTV.setText("Name");
     }
@@ -319,7 +313,7 @@ String mailToId;
         if (CommonUtils.isNetworkAvailable(this)) {
 
             Url_teacher_list = getString(R.string.base_url) + "/app/parent/getUsers/1";
-                Log.i("===list_teacher===", Url_teacher_list);
+            Log.i("===list_teacher===", Url_teacher_list);
             WebServiceCall call = new WebServiceCall(this);
             call.getCallRequest(Url_teacher_list);
         } else {
@@ -333,11 +327,11 @@ String mailToId;
             String mailFrom = StorageManager.readString(this, "username", "");
 
             String mailTo = to.getText().toString();
-           // String mailToString[] = mailTo.split("=");
+            // String mailToString[] = mailTo.split("=");
             Log.i("----->123",mailTo);
             String mailToStringdata = to.getText().toString();
             Log.i("----->1234",mailToStringdata);
-         pm=  extras.getString("msg");
+            //  pm=  extras.getString("msg");
 
 
             String mailSubject = subject.getText().toString();
@@ -359,8 +353,8 @@ String mailToId;
                     jsonObject.put("toId", mailId);
                     jsonObject.put("fromId", mailFrom);
                     jsonObject.put("title", mailSubject);
-                    //jsonObject.put("messageText", mailMessage);
-                 jsonObject.put("messageText", mailMessage +"\n"+"\n"+"Reply of... "+"\n" +pm);
+                    jsonObject.put("messageText", mailMessage);
+                    // jsonObject.put("messageText", mailMessage +"\n"+"\n"+"Reply of... "+"\n" +pm);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -381,7 +375,7 @@ String mailToId;
         String mailSentStatus = null;
         try {
             if (response.has("status")) {
-               mailSentStatus = response.getString("status");
+                mailSentStatus = response.getString("status");
             }
         }catch (JSONException e) {
             e.printStackTrace();

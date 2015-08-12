@@ -8,9 +8,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.mychild.adapters.SentAdapter;
 import com.mychild.utils.TopBar1;
 import com.mychild.view.CommonToApp.BaseFragmentActivity;
+import com.mychild.view.R;
+
 import com.mychild.view.R;
 
 public class SentDetailActivity extends BaseFragmentActivity implements View.OnClickListener {
@@ -89,4 +92,3 @@ public class SentDetailActivity extends BaseFragmentActivity implements View.OnC
 
 
 }
-

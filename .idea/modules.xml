@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ViewpagerIndicator/ViewpagerIndicator.iml" filepath="$PROJECT_DIR$/ViewpagerIndicator/ViewpagerIndicator.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/gotomychild.iml" filepath="$PROJECT_DIR$/gotomychild.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gotomychildMain.iml" filepath="$PROJECT_DIR$/gotomychildMain.iml" />
       <module fileurl="file://$PROJECT_DIR$/infiniteviewpagerLibrary/infiniteviewpagerLibrary.iml" filepath="$PROJECT_DIR$/infiniteviewpagerLibrary/infiniteviewpagerLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/myCalendar/myCalendar.iml" filepath="$PROJECT_DIR$/myCalendar/myCalendar.iml" />
     </modules>
