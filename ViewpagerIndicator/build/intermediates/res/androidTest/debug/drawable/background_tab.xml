@@ -5,4 +5,4 @@
     <item android:state_focused="true" android:drawable="@android:color/transparent"/>
     <item android:drawable="@android:color/transparent"/>
 
-</selector><!-- From: file:/E:/New%20folder/gotomychildMain/ViewpagerIndicator/res/drawable/background_tab.xml --><!-- From: file:/E:/New%20folder/gotomychildMain/ViewpagerIndicator/build/intermediates/bundles/debug/res/drawable/background_tab.xml -->
+</selector><!-- From: file:/D:/gotomychildMain/ViewpagerIndicator/res/drawable/background_tab.xml --><!-- From: file:/D:/gotomychildMain/ViewpagerIndicator/build/intermediates/bundles/debug/res/drawable/background_tab.xml -->

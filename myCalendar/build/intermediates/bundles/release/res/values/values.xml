@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/E:/New%20folder/gotomychildMain/myCalendar/src/main/res/values/color.xml -->
+    <!-- From: file:/D:/gotomychildMain/myCalendar/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="app_top_background">#FFFFFFFF</color>
     <color name="caldroid_black">#000000</color>
@@ -12,7 +12,7 @@
     <color name="caldroid_sky_blue">#FFA3E8F7</color>
     <color name="caldroid_transparent">#00000000</color>
     <color name="caldroid_white">#FFFFFF</color>
-    <!-- From: file:/E:/New%20folder/gotomychildMain/myCalendar/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/gotomychildMain/myCalendar/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="app_name">CalendarFragment</string>
 </resources>
