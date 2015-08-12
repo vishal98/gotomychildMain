@@ -99,7 +99,7 @@ public class ParentInboxActivity extends BaseActivity implements RequestCompleti
 
             case R.id.write_mailIV:
 
-                startActivity(new Intent(ParentInboxActivity.this, ParentWriteMailToTeacher2.class));
+                startActivity(new Intent(ParentInboxActivity.this, ParentWriteMailToTeacher2Activity.class));
 
                 break;
             case R.id.switch_child:
