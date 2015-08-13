@@ -61,7 +61,6 @@ public class ParentWriteMailToTeacher extends BaseFragmentActivity implements Re
     private ImageView sendMail;
     String responseType;
     TextView date;
-
     EditText url_ed1;
     private ArrayAdapter<String> arrayAdapter;
     public static List<String> ll ;
