@@ -67,7 +67,7 @@
     <string name="calender_task_teacher">/app/events/teacher/</string>
     <string name="gallery_url">/app/getuserAlbums</string>
     <string name="changepwd_url">/app/changePassword</string>
-    <string name="map_getbusgeocode_url">/app/locationDetails</string>
+    <string name="map_getbusgeocode_url">/app/locationDetails/</string>
 
 
     <!--teacher flow-->
