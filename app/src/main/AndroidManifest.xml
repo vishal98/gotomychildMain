@@ -179,33 +179,35 @@
             android:label="@string/title_activity_exams"
             android:screenOrientation="portrait" />
 
-        <!--
+
               <meta-data
               android:name="com.google.android.maps.v2.API_KEY"
               android:value="AIzaSyCsUJDV_fX8CtbEnqUu5zMTkIBw0IsLFR0"
               />
-        -->
-        <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyAZ209c8q_suKuXmk22nkZAGNYznK9tdOw" />
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+
+        <!--
+       <meta-data
+           android:name="com.google.android.maps.v2.API_KEY"
+           android:value="AIzaSyAZ209c8q_suKuXmk22nkZAGNYznK9tdOw" />
+             -->
+       <meta-data
+           android:name="com.google.android.gms.version"
+           android:value="@integer/google_play_services_version" />
 
 
-        <activity
-            android:name="com.mychild.view.Parent.ParentSentActivity"
-            android:label="@string/title_activity_parent_sent" >
-        </activity>
-        <activity
-            android:name="com.mychild.view.Parent.ParentWriteMailToTeacher2"
-            android:label="@string/title_activity_parent_write_mail_to_teacher2" >
-        </activity>
-        <activity
-            android:name="com.mychild.view.Parent.SentDetailActivity"
-            android:label="@string/title_activity_sent_detail" >
-        </activity>
+       <activity
+           android:name="com.mychild.view.Parent.ParentSentActivity"
+           android:label="@string/title_activity_parent_sent" >
+       </activity>
+       <activity
+           android:name="com.mychild.view.Parent.ParentWriteMailToTeacher2"
+           android:label="@string/title_activity_parent_write_mail_to_teacher2" >
+       </activity>
+       <activity
+           android:name="com.mychild.view.Parent.SentDetailActivity"
+           android:label="@string/title_activity_sent_detail" >
+       </activity>
 
-    </application>
+   </application>
 
 </manifest>
