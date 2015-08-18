@@ -31,7 +31,7 @@
             android:layout_marginLeft="10dp" />
         <TextView
             android:id="@+id/mailSubjectTV"
-            android:layout_width="wrap_content"
+            android:layout_width="190dp"
             android:layout_height="wrap_content"
             android:text="Subject Name"
             android:textStyle="bold"
@@ -43,7 +43,7 @@
         <TextView
             android:id="@+id/mailDescriptionTV"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:text="Message"
             android:layout_toRightOf="@+id/inboxMessageIV"
             android:layout_below="@+id/mailSubjectTV"

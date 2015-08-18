@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mychild.Networkcall.RequestCompletion;
 import com.mychild.Networkcall.WebServiceCall;
@@ -376,6 +377,7 @@ public class AssignTaskActivity extends BaseActivity implements View.OnClickList
                     webServiceCall.postToServer(jsonObject, base_and_post_url);*/
                     httpConnectThread = new HttpConnectThread(this, jsonObject, this);
                     httpConnectThread.execute(getString(R.string.base_url) + getString(R.string.url_post_assign_task));
+                    Toast.makeText(getApplicationContext(),"Task Assigned",Toast.LENGTH_LONG).show();
            /* Constants.showProgress(this);
             WebServiceCall call = new WebServiceCall(AssignTaskActivity.this);
           //  call.getCallRequest(getString(R.string.base_url) + getString(R.string.url_teacher_deatils) + teacherName);

@@ -8,11 +8,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mychild.adapters.SentAdapter;
 import com.mychild.utils.TopBar1;
 import com.mychild.view.CommonToApp.BaseFragmentActivity;
 import com.mychild.view.R;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class SentDetailActivity extends BaseFragmentActivity implements View.OnClickListener {
     public static final String TAG = com.mychild.view.Parent.ParentWriteMailToTeacher.class.getSimpleName();
@@ -31,6 +35,19 @@ public class SentDetailActivity extends BaseFragmentActivity implements View.OnC
         //  switchChildBar();
         setTopBar();
         UpdateUI();
+        date=(TextView)findViewById(R.id.date);
+        Calendar c = Calendar.getInstance();
+        System.out.println("Current time => "+c.getTime());
+
+        SimpleDateFormat df = new SimpleDateFormat("dd MMM yyyy ");
+        String formattedDate = df.format(c.getTime());
+        // formattedDate have current date/time
+        Toast.makeText(this, formattedDate, Toast.LENGTH_SHORT).show();
+
+
+        // Now we display formattedDate value in TextView
+
+        date.setText(formattedDate);
 
     }
     @Override
@@ -60,7 +77,7 @@ public class SentDetailActivity extends BaseFragmentActivity implements View.OnC
         mailTimeTV = (TextView) findViewById(R.id.mailTimeTV);
         mailTitleTV = (TextView) findViewById(R.id.mailTitleTV);
         mailFromTV = (TextView) findViewById(R.id.mailFromTV);
-        date = (TextView) findViewById(R.id.date);
+
         backButton.setOnClickListener(this);
     }
     public void setTopBar() {

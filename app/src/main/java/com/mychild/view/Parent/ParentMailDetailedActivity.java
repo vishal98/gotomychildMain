@@ -17,6 +17,9 @@ import com.mychild.view.CommonToApp.BaseFragmentActivity;
 import com.mychild.view.R;
 import com.mychild.volley.AppController;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 /**
  * Created by Vijay on 4/11/15.
  */
@@ -29,7 +32,7 @@ public class ParentMailDetailedActivity extends BaseFragmentActivity implements 
     private int selectedChildPosition = 0;
     ImageView backButton,mReplyMailIMGV;
     private Dialog dialog = null;
-    TextView detailedMailTV,regardsFromTV, mailTimeTV,mailTitleTV,mailFromTV ;
+    TextView date,detailedMailTV,regardsFromTV, mailTimeTV,mailTitleTV,mailFromTV ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,19 @@ public class ParentMailDetailedActivity extends BaseFragmentActivity implements 
       //  switchChildBar();
         setTopBar();
         UpdateUI();
+        date=(TextView)findViewById(R.id.date);
+        Calendar c = Calendar.getInstance();
+        System.out.println("Current time => "+c.getTime());
+
+        SimpleDateFormat df = new SimpleDateFormat("dd MMM yyyy ");
+        String formattedDate = df.format(c.getTime());
+        // formattedDate have current date/time
+        Toast.makeText(this, formattedDate, Toast.LENGTH_SHORT).show();
+
+
+        // Now we display formattedDate value in TextView
+
+        date.setText(formattedDate);
     }
 
     public void onSwitchChild(int selectedChildPosition) {
