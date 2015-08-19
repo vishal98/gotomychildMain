@@ -33,18 +33,28 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="5dp"
         android:src="@drawable/logout" />
 
     <ImageView
         android:id="@+id/notification"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="5dp"
         android:layout_toLeftOf="@+id/logoutIV"
         android:src="@drawable/forgot_password_icon"
         android:visibility="visible" />
+    <ImageView
+        android:id="@+id/help"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@+id/notification"
+        android:src="@drawable/abc_btn_rating_star_off_mtrl_alpha"
+        android:visibility="visible" />
+
 
 
 </RelativeLayout>

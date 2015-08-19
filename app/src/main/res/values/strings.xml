@@ -211,6 +211,7 @@
     <string name="title_activity_parent_write_mail_to_teacher2">ParentWriteMailToTeacher2</string>
     <string name="title_activity_help">HelpActivity</string>
     <string name="title_activity_mail">Mail</string>
+    <string name="title_activity_support">SupportActivity</string>
 
 
 </resources>

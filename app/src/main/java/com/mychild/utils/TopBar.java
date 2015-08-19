@@ -18,7 +18,7 @@ import com.mychild.view.R;
 public class TopBar extends RelativeLayout {
     public ImageView backArrowIV,mMenuSliderIV;
     public TextView titleTV;
-    public ImageView logoutIV,notification;
+    public ImageView logoutIV,notification,help;
 
     public TopBar(Context context) {
         super(context);
@@ -42,6 +42,7 @@ public class TopBar extends RelativeLayout {
         backArrowIV = (ImageView) findViewById(R.id.back_arrow_iv);
         titleTV = (TextView) findViewById(R.id.title_tv);
         logoutIV = (ImageView) findViewById(R.id.logoutIV);
+        help = (ImageView) findViewById(R.id.help);
       //  mMenuSliderIV=(ImageView) findViewById(R.id.menusliderimgview);
         notification = (ImageView) findViewById(R.id.notification);
 
@@ -50,6 +51,14 @@ public class TopBar extends RelativeLayout {
             public void onClick(View view) {
 
                 Intent i = new Intent(getContext(), ChangePasswordActivity.class);
+                getContext().startActivity(i);
+            }
+        });
+        help.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(getContext(), SupportActivity.class);
                 getContext().startActivity(i);
             }
         });
